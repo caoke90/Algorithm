@@ -19,12 +19,12 @@ function max_heapfy(A,i){
     var largest
     var l=left(i)
     var r=right(i)
-    if(l<A.heap_size&&A[l]>A[i]){
+    if(l<=A.heap_size&&A[l]>A[i]){
         largest=l
     }else{
         largest=i
     }
-    if(r< A.heap_size&&A[r]>A[largest]){
+    if(r<=A.heap_size&&A[r]>A[largest]){
         largest=r
     }
     if(largest!=i){
@@ -35,13 +35,13 @@ function max_heapfy(A,i){
 var arr=[15,1,34,3,23,12,45,56]
 //建立堆
 function buid_max_heap(A){
-    A.heap_size= A.length
+    A.heap_size= A.length-1
     for(i= A.length-1>>1;i>=0;i--){
         max_heapfy(A,i)
     }
 }
 buid_max_heap(arr)
-cc.log(arr) //=>[  56, 23, 45, 3, 15, 12, 34, 1, heap_size: 9 ]
+cc.log(arr) //=>[  56, 23, 45, 3, 15, 12, 34, 1, heap_size: 7 ]
 //            15
 //        1      34
 //    3   23    12  45
@@ -68,10 +68,12 @@ function heapsort(A){
     }
 }
 heapsort(arr)
-cc.log(arr) //=>[ 1, 3, 12, 15, 23, 34, 45, 56, heap_size: 1 ]
+cc.log(arr) //=>[ 1, 3, 12, 15, 23, 34, 45, 56, heap_size: 0 ]
+//放回最大
 function heap_maximum(A){
     return A[1]
 }
+//最大优先队列
 function heap_extract_max(A){
     if(A.heap_size<0){
         throw "heap underflow"
@@ -81,4 +83,22 @@ function heap_extract_max(A){
     A.heap_size=A.heap_size-1
     max_heapfy(A,1)
     return max
+}
+//插入最大堆排序
+function heap_increase_key(A,i,key){
+    if(key<A[i]){
+        throw "new key is smaller than current key"
+    }
+    A[i]=key
+    while(i>0&&A[parent(i)]<A[i]){
+        exchange(A,i,parent(i))
+        i=parent(i)
+    }
+}
+//插入最大堆
+function max_heap_insert(A,key){
+    A.heap_size= A.heap_size+1
+    A[A.heap_size]=0
+    heap_increase_key(A, A.heap_size,key)
+
 }
