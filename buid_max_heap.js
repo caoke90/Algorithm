@@ -10,9 +10,11 @@ function right(i){
     return 2*i+2
 }
 function exchange(A,p1,p2){
-    var temp=A[p1]
-    A[p1]=A[p2]
-    A[p2]=temp
+    if(p1!=p2){
+        var temp=A[p1]
+        A[p1]=A[p2]
+        A[p2]=temp
+    }
 }
 //维护最大堆的性质
 function max_heapfy(A,i){
