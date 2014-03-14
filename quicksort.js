@@ -14,13 +14,15 @@ function quicksort(A,p,r){
         quicksort(A,q+1,r)
     }
 }
-
 function partition(A,p,r){
+    //保存最后一个值
     var x=A[r]
+    //左标
     var i=p-1
     for(var j=p;j<r;j++){
         if(A[j]<=x){
             i=i+1
+            //交换插入
             exchange(A,i,j)
         }
     }

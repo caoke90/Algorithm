@@ -14,19 +14,36 @@ function quicksort(A,p,r){
         quicksort(A,q+1,r)
     }
 }
-
-function partition(A,p,r){
+function partition(A,l,r){
+    //保存最后一个值
     var x=A[r]
-    var i=p-1
-    for(var j=p;j<r;j++){
-        if(A[j]<=x){
-            i=i+1
-            exchange(A,i,j)
+    //左标
+    var p=l-1
+    for(var i=l;i<r;i++){
+        if(A[i]<=x){
+            p=p+1
+            //交换插入
+            exchange(A,p,i)
         }
     }
-    exchange(A,i+1,r)
-    return i+1
+    exchange(A,p+1,r)
+    return p+1
 }
 var arr=[15,1,34,3,23,12,45,56]
-quicksort(arr,0,arr.length-1)
-cc.log(arr)//=>[ 1, 3, 12, 15, 23, 34, 45, 56 ]
+//quicksort(arr,0,arr.length-1)
+//cc.log(arr)//=>[ 1, 3, 12, 15, 23, 34, 45, 56 ]
+function randomized_partition(A,l,r){
+    var p=0|Math.random()*(r-l)+l
+    exchange(A,r,p)
+    return partition(A,l,r)
+}
+//快速排序 随机化版本
+function randomized_quicksort(A,l,r){
+    if(l<r){
+        var q=randomized_partition(A,l,r)
+        randomized_quicksort(A,l,q-1)
+        randomized_partition(A,q+1,r)
+    }
+}
+randomized_quicksort(arr,0,arr.length-1)
+cc.log(arr)
